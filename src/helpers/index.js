@@ -19,8 +19,8 @@ const run = async () => {
     await page.waitForSelector('div.slashui-image-cntr > img');
 
     const deals = await page.evaluate(() => {
-      const images = Array.from(document.querySelectorAll('div.slashui-image-cntr > img'))
-      return images.map(image => image.src).slice(0, 18)
+      const images = Array.from(document.querySelectorAll('div.slashui-image-cntr > img'));
+      return images.map(image => image.src).slice(0, 18);
     });
 
     console.log(deals);
