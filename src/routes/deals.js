@@ -1,4 +1,5 @@
 import express from 'express';
+import { run } from '../helpers';
 
 const router = express.Router();
 
@@ -11,6 +12,6 @@ const sayHello = async (req, res, next) => {
 }
 
 router.route('/')
-  .get(sayHello)
+  .get(run)
 
 export { router as dealsRoute };
