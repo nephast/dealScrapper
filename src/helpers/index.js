@@ -1,6 +1,5 @@
 import puppeteer from 'puppeteer';
-
-const URL = 'https://www.ebay.co.uk/deals';
+import { URL } from '../config';
 
 const run = async () => {
   try {
@@ -29,6 +28,7 @@ const run = async () => {
     await browser.close();
 
   } catch (err) {
+    //TODO: sort out error handling here
     console.log(err)
   } 
     
