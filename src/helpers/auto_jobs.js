@@ -2,6 +2,7 @@ import { CronJob } from 'cron';
 import { run } from './deals';
 
 const hourlyBatch = new CronJob('0 * * * *', () => {
+  run();
   console.log('Hourly data fetching done');
 }, null, true, 'Europe/London');
 
