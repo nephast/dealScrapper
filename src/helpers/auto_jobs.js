@@ -1,16 +1,24 @@
 import { CronJob } from 'cron';
 import { run } from './deals';
 
+//this only scrap data for now
+//more work needed to allow saving data on a cron task 
 const hourlyBatch = new CronJob('0 * * * *', async () => {
-  const deals = await run();
-  console.log('Hourly data fetching done');
-  return deals;
+  try {
+    const deals = await run();
+    return deals;
+  } catch (e) {
+    return new Error(e);
+  }
 }, null, true, 'Europe/London');
 
 const firstBatch = async () => {
-  const deals = await run();
-  console.log('FIRST PULL DONE')
-  return deals;
+  try {
+    const deals = await run();
+    return deals;
+  } catch (e) {
+    return new Error(e);
+  }
 }
 
 export {

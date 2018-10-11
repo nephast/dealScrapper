@@ -11,7 +11,10 @@ const run = async () => {
       width: 1024
     });
 
-    await page.goto(URL);
+    await page.goto(URL)
+      .catch(e => {
+        console.log({ message: 'Provider not available', error: e });
+      });
    
     // set headers to not look like a bot
     await page.setExtraHTTPHeaders({Referer: 'https://www.ebay.com/'});
@@ -21,16 +24,17 @@ const run = async () => {
     const deals = await page.evaluate(() => {
       const images = Array.from(document.querySelectorAll('div.slashui-image-cntr > img'));
       return images.map(image => image.src).slice(0, 18);
-    });
-
-    console.log(deals);
+    })
+      .catch(e => {
+        console.log({ message: 'Error scrapping', error: e })
+      })
+    ;
 
     await browser.close();
     return deals;
 
   } catch (err) {
-    //TODO: sort out error handling here
-    console.log(err)
+    return new Error(err);
   }  
 }
 

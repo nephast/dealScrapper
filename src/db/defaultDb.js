@@ -15,8 +15,7 @@ class DefaultDb {
       .insert(dbModel).returning('*');
     return { err: null, data: result };
    } catch (e) {
-    console.log({ message: 'Error DB create', error: e });
-    return { err: new Error(), data: null };
+    return { err: new Error('Error creating data'), data: null };
    }
   }
 
@@ -27,12 +26,21 @@ class DefaultDb {
         .where({ deal_id: id });
 
     if (data.length === 0) {
-      return { err: new Error(), data: null };
+      return { err: new Error('No deal available with this ID'), data: null };
     }
     return { err: null, data: this.fromDatabase(data[0]) };
     } catch (e) {
-      console.log({ message: 'Error retrieving data', error: e });
-      return { err: new Error(), data: null }
+      return { err: new Error('Error retrieving data'), data: null };
+    }
+  }
+
+  async deleteAll() {
+    try {
+      const data = await  this.db(this.table)
+        .delete('*');
+      return { err: null, data: this.fromDatabase(data) };  
+    } catch (e) {
+      return { err: new Error('Error deleting data'), data: null };
     }
   }
 }

@@ -23,7 +23,15 @@ class DealsControllers {
       console.log('ID is mandatory');
       return { err: new Error(), data: null };
     }
-    const { err, data } = await this.db.getById({ id })
+    const { err, data } = await this.db.getById({ id });
+    if (err) {
+      return { err, data: null };
+    }
+    return { err: null, data };
+  }
+
+  async deleteAll() {
+    const { err, data } = await this.db.deleteAll();
     if (err) {
       return { err, data: null };
     }

@@ -14,18 +14,31 @@ app.use(bodyParser.json());
 
 const saveDeals = (dealsArray) => {
     return dealsArray.map(async deal => {
-      await dealsControllers.create({ dealId: (dealsArray.indexOf(deal) + 1), dealPicture: deal }) ;
-  })
+      await dealsControllers.create({ dealId: (dealsArray.indexOf(deal) + 1), dealPicture: deal });
+    });
 }
 
 const getAndSaveDeals = async () => {
-  const deals = await firstBatch();
-  const { err, data } = await Promise.all(saveDeals(deals));
-  if (err) {
-    console.log('error', err)
-    throw new Error(err);
+  try {
+    const { err, data } = await dealsControllers.deleteAll();
+    if (err) {
+      throw new Error(err);
+    }
+  } catch (e) {
+    console.log(e);
+    return new Error(e);
   }
-  return { err: null, data };
+  const deals = await firstBatch();
+
+  try {
+    const dealsArray = await Promise.all(saveDeals(deals))
+    if (dealsArray.some(deal => deal === undefined)) {
+      throw new Error('Error saving data');
+    }
+  } catch (e) {
+    console.log(e);
+    return new Error(e);
+  }   
 };
 
 app.use('/deals', dealsRoute);
@@ -34,7 +47,7 @@ app.use(notFoundError);
 app.use(genericError);
 
 app.listen(PORT, () => {
-  // getAndSaveDeals();
-  // hourlyBatch.start();
+  getAndSaveDeals();
+  hourlyBatch.start();
   console.log(`Server running on port ${PORT}`);
 });
