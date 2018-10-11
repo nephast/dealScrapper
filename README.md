@@ -13,7 +13,10 @@ You'll need `psql` installed on your machine.
 
 Run `npm start`
 It will compile using Babel.
+
 The server will restart at changes using Nodemon. (you can change that by updating the scrip in `package.json`).
+
+GET `localhost:3000/deals/:id` , no Headers needed.
 
 ## TODO:
 
