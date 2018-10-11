@@ -1,7 +1,7 @@
 import { dealDb } from '../db';
-import { Deal } from './deals';
+import { DealsControllers } from './deals';
 
-const dealsControllers = new Deal(dealDb);
+const dealsControllers = new DealsControllers(dealDb);
 
 export {
   dealsControllers

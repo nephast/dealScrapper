@@ -1,6 +1,6 @@
 import pool from './pool';
 
-class defaultDb {
+class DefaultDb {
   constructor({ table, transformer }) {
     this.db = pool;
     this.table = table;
@@ -22,5 +22,5 @@ class defaultDb {
 }
 
 export {
-  defaultDb
+  DefaultDb
 };

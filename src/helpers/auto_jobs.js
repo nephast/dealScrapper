@@ -6,9 +6,10 @@ const hourlyBatch = new CronJob('0 * * * *', () => {
   console.log('Hourly data fetching done');
 }, null, true, 'Europe/London');
 
-const firstBatch = () => {
-  run();
+const firstBatch = async () => {
+  const deals = await run();
   console.log('FIRST PULL DONE')
+  return deals;
 }
 
 export {

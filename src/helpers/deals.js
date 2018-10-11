@@ -26,6 +26,7 @@ const run = async () => {
     console.log(deals);
 
     await browser.close();
+    return deals;
 
   } catch (err) {
     //TODO: sort out error handling here
