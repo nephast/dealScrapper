@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
-import 'dotenv/config';
 import bodyParser from 'body-parser';
+import Promise from 'bluebird';
 import { genericError, notFoundError } from './errors';
 import { hourlyBatch, firstBatch } from './helpers';
 import { dealsRoute } from './routes/deals';
@@ -12,16 +12,21 @@ const app = express();
 
 app.use(bodyParser.json());
 
+const prepareDeals = (dealsArray) => {
+    return dealsArray.map(async deal => {
+      await dealsControllers.create({ dealId: (dealsArray.indexOf(deal) + 1), dealPicture: deal }) ;
+  })
+}
+
 const getDeals = async () => {
   const deals = await firstBatch();
-  console.log('FIRST DEAL: ', deals[0])
-  const { err, data } = await dealsControllers.create({ dealId: 123, dealPicture: deals[0] })
+  const { err, data } = await Promise.all(prepareDeals(deals));
   if (err) {
     console.log('error', err)
     throw new Error(err);
   }
   return { err: null, data };
-}
+};
 
 app.use('/deals/:id', dealsRoute);
 
