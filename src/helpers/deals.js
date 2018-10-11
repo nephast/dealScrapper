@@ -3,7 +3,7 @@ import { URL } from '../config';
 
 const run = async () => {
   try {
-    const browser = await puppeteer.launch({ headless: false, slowmo: 250 });
+    const browser = await puppeteer.launch({ headless: true, slowmo: 250 });
     const page = await browser.newPage();
 
     page.setViewport({
