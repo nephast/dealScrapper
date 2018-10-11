@@ -12,15 +12,15 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const prepareDeals = (dealsArray) => {
+const saveDeals = (dealsArray) => {
     return dealsArray.map(async deal => {
       await dealsControllers.create({ dealId: (dealsArray.indexOf(deal) + 1), dealPicture: deal }) ;
   })
 }
 
-const getDeals = async () => {
+const getAndSaveDeals = async () => {
   const deals = await firstBatch();
-  const { err, data } = await Promise.all(prepareDeals(deals));
+  const { err, data } = await Promise.all(saveDeals(deals));
   if (err) {
     console.log('error', err)
     throw new Error(err);
@@ -28,13 +28,13 @@ const getDeals = async () => {
   return { err: null, data };
 };
 
-app.use('/deals/:id', dealsRoute);
+app.use('/deals', dealsRoute);
 
 app.use(notFoundError);
 app.use(genericError);
 
 app.listen(PORT, () => {
-  getDeals();
-  hourlyBatch.start();
+  // getAndSaveDeals();
+  // hourlyBatch.start();
   console.log(`Server running on port ${PORT}`);
 });

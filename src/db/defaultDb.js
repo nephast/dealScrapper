@@ -19,6 +19,22 @@ class DefaultDb {
     return { err: new Error(), data: null };
    }
   }
+
+  async getById({ id }) {
+    try {
+      const data = await this.db(this.table)
+        .select('*')
+        .where({ deal_id: id });
+
+    if (data.length === 0) {
+      return { err: new Error(), data: null };
+    }
+    return { err: null, data: this.fromDatabase(data[0]) };
+    } catch (e) {
+      console.log({ message: 'Error retrieving data', error: e });
+      return { err: new Error(), data: null }
+    }
+  }
 }
 
 export {

@@ -17,6 +17,18 @@ class DealsControllers {
     }
     return { err: null, data };
   }
+
+  async getById({ id }) {
+    if (!id) {
+      console.log('ID is mandatory');
+      return { err: new Error(), data: null };
+    }
+    const { err, data } = await this.db.getById({ id })
+    if (err) {
+      return { err, data: null };
+    }
+    return { err: null, data };
+  }
 }
 
 export {

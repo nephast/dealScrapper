@@ -31,9 +31,7 @@ const run = async () => {
   } catch (err) {
     //TODO: sort out error handling here
     console.log(err)
-  } 
-    
-   
+  }  
 }
 
 export {
