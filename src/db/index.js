@@ -1,7 +1,6 @@
-const DefaultDb = require('./defaultDb');
-const { Deal } = require('../models');
+import { DealsTransformers, DealsDb } from './deal';
 
-const dealDb = new DefaultDb({ table: 'deals', model: Deal });
+const dealDb = new DealsDb({ table: 'deals', transformer: DealsTransformers });
 
 module.exports = {
   dealDb
