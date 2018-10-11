@@ -9,6 +9,12 @@
 Run `npm i` in the main folder.
 You'll need `psql` installed on your machine.
 
+### To run:
+
+Run `npm start`
+It will compile using Babel.
+The server will restart at changes using Nodemon.
+
 ## TODO:
 
 - Error handling to be revisited to ensure edge cases are covered.
