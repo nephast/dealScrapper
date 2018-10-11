@@ -30,11 +30,11 @@ const getAndSaveDeals = async () => {
   }
   const deals = await firstBatch();
 
+  // TODO need to work on error handling here:
   try {
-    const dealsArray = await Promise.all(saveDeals(deals))
-    if (dealsArray.some(deal => deal === undefined)) {
-      throw new Error('Error saving data');
-    }
+     await Promise.all(saveDeals(deals))
+      .catch(e => e)
+      .then(resp => resp)
   } catch (e) {
     console.log(e);
     return new Error(e);

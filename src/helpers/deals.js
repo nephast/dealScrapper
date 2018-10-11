@@ -11,6 +11,7 @@ const run = async () => {
       width: 1024
     });
 
+    // need better error handling during scrapping
     await page.goto(URL)
       .catch(e => {
         console.log({ message: 'Provider not available', error: e });
